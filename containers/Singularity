@@ -1,0 +1,35 @@
+Bootstrap: docker
+From: debian:jessie-slim
+
+
+%post
+    apt update \
+    && apt install -y --no-install-recommends \
+    build-essential \
+    ca-certificates \
+    git \
+    gcc \
+    make \
+    automake \
+    autoconf \
+    openjdk-7-jre \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+    cd /opt
+    git clone https://github.com/loneknightpy/idba \
+    && cd idba \
+    && ./build.sh \
+    && make
+    cd /usr/local/bin
+    ln -s /opt/idba/bin/idba_ud
+    cd /
+    TRIMMOMATIC_SOURCE="Trimmomatic-0.36.zip" \
+    TRIMMOMATIC_HOME="/opt/trimmomatic"
+    wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip -O /opt/trimmomatic.zip && \
+    unzip /opt/trimmomatic.zip -d /opt/ && \
+    rm /opt/trimmomatic.zip
+    
+%test
+    which idba_ud
+
