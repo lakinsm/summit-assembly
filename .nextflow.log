@@ -1,0 +1,83 @@
+Aug-20 14:55:57.336 [main] DEBUG nextflow.cli.Launcher - $> /home/lakinsm/bin/nextflow run summit-assembly.nf --output /mnt/temp/blah
+Aug-20 14:55:57.417 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.28.2
+Aug-20 14:55:57.426 [main] INFO  nextflow.cli.CmdRun - Launching `summit-assembly.nf` [grave_jepsen] - revision: 5f215f3db9
+Aug-20 14:55:57.439 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: nextflow.config
+Aug-20 14:55:57.441 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /mnt/phd_repositories/summit-assembly/nextflow.config
+Aug-20 14:55:57.475 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Aug-20 14:55:57.738 [main] DEBUG nextflow.Session - Session uuid: 77f2fe08-3aae-42b0-a242-54753c8577fb
+Aug-20 14:55:57.738 [main] DEBUG nextflow.Session - Run name: grave_jepsen
+Aug-20 14:55:57.740 [main] DEBUG nextflow.Session - Executor pool size: 8
+Aug-20 14:55:57.751 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 0.28.2 build 4782
+  Modified: 06-04-2018 12:25 UTC (06:25 MDT)
+  System: Linux 4.13.0-46-generic
+  Runtime: Groovy 2.4.13 on Java HotSpot(TM) 64-Bit Server VM 1.8.0_181-b13
+  Encoding: UTF-8 (UTF-8)
+  Process: 6978@myst [10.84.97.203]
+  CPUs: 8 - Mem: 15.6 GB (6.9 GB) - Swap: 4 GB (4 GB)
+Aug-20 14:55:57.771 [main] DEBUG nextflow.Session - Work-dir: /mnt/phd_repositories/summit-assembly/work [ext2/ext3]
+Aug-20 14:55:57.771 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /mnt/phd_repositories/summit-assembly/bin
+Aug-20 14:55:57.877 [main] DEBUG nextflow.Session - Session start invoked
+Aug-20 14:55:57.879 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Aug-20 14:55:57.879 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Aug-20 14:55:58.004 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Aug-20 14:55:58.017 [main] DEBUG nextflow.Channel - files for syntax: glob; folder: containers/data/raw/; pattern: *_R{1,2}_001.fastq.gz; options: [:]
+Aug-20 14:55:58.248 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Aug-20 14:55:58.248 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Aug-20 14:55:58.253 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Aug-20 14:55:58.255 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Aug-20 14:55:58.259 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=15.6 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Aug-20 14:55:58.263 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: LocalPollingMonitor
+Aug-20 14:55:58.264 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Aug-20 14:55:58.265 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Aug-20 14:55:58.287 [main] DEBUG nextflow.Session - >>> barrier register (process: QualityControl)
+Aug-20 14:55:58.289 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > QualityControl -- maxForks: 1
+Aug-20 14:55:58.306 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Aug-20 14:55:58.306 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Aug-20 14:55:58.306 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Aug-20 14:55:58.307 [main] DEBUG nextflow.Session - >>> barrier register (process: AssembleReads)
+Aug-20 14:55:58.307 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > AssembleReads -- maxForks: 1
+Aug-20 14:55:58.308 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Aug-20 14:55:58.309 [main] DEBUG nextflow.Session - Session await
+Aug-20 14:55:58.343 [Actor Thread 2] DEBUG nextflow.container.SingularityCache - Singularity found local store for image=shub://lakinsm/summit-assembly:latest; path=/mnt/phd_repositories/summit-assembly/work/singularity/lakinsm-summit-assembly-latest.img
+Aug-20 14:55:58.413 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Aug-20 14:55:58.417 [Task submitter] INFO  nextflow.Session - [87/967b55] Submitted process > QualityControl (SH-IC-13B-Nal_reduced)
+Aug-20 14:56:06.568 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: QualityControl (SH-IC-13B-Nal_reduced); status: COMPLETED; exit: 0; error: -; workDir: /mnt/phd_repositories/summit-assembly/work/87/967b5524b43422015f935239f784f5]
+Aug-20 14:56:06.591 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Aug-20 14:56:06.592 [Task submitter] INFO  nextflow.Session - [50/417fd8] Submitted process > AssembleReads (SH-IC-13B-Nal_reduced)
+Aug-20 14:56:06.592 [Actor Thread 4] DEBUG nextflow.Session - <<< barrier arrive (process: QualityControl)
+Aug-20 14:56:06.816 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: AssembleReads (SH-IC-13B-Nal_reduced); status: COMPLETED; exit: 127; error: -; workDir: /mnt/phd_repositories/summit-assembly/work/50/417fd830acae8ed56c673fba36f255]
+Aug-20 14:56:06.841 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'AssembleReads (SH-IC-13B-Nal_reduced)'
+
+Caused by:
+  Process `AssembleReads (SH-IC-13B-Nal_reduced)` terminated with an error exit status (127)
+
+Command executed:
+
+  mkdir -p temp/idba
+  fq2fa --merge --filter <( zcat SH-IC-13B-Nal_reduced.1P.fastq.gz) <( zcat SH-IC-13B-Nal_reduced.2P.fastq.gz ) temp/interleavened.fasta
+     idba_ud --num_threads 60 -l temp/interleavened.fasta -o temp/idba
+  
+  cp temp/idba/contig.fa SH-IC-13B-Nal_reduced.contigs.fasta
+
+Command exit status:
+  127
+
+Command output:
+  (empty)
+
+Command error:
+  .command.sh: line 3: fq2fa: command not found
+
+Work dir:
+  /mnt/phd_repositories/summit-assembly/work/50/417fd830acae8ed56c673fba36f255
+
+Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
+Aug-20 14:56:06.844 [Actor Thread 5] DEBUG nextflow.Session - <<< barrier arrive (process: AssembleReads)
+Aug-20 14:56:06.844 [main] DEBUG nextflow.Session - Session await > all process finished
+Aug-20 14:56:06.845 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Process `AssembleReads (SH-IC-13B-Nal_reduced)` terminated with an error exit status (127)
+Aug-20 14:56:06.863 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Aug-20 14:56:06.863 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+Aug-20 14:56:06.876 [main] DEBUG nextflow.trace.StatsObserver - Workflow completed > WorkflowStats[succeedCount=1; failedCount=1; ignoredCount=0; cachedCount=0; succeedDuration=8.1s; failedDuration=153ms; cachedDuration=0ms]
+Aug-20 14:56:06.884 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Aug-20 14:56:06.891 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

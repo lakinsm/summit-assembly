@@ -1,0 +1,38 @@
+Aug-20 14:41:29.691 [main] DEBUG nextflow.cli.Launcher - $> /home/lakinsm/bin/nextflow summit-assembly.nf
+Aug-20 14:41:29.744 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.28.2
+Aug-20 14:41:29.753 [main] INFO  nextflow.cli.CmdRun - Launching `summit-assembly.nf` [hopeful_rubens] - revision: 77e1f4e770
+Aug-20 14:41:29.762 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: nextflow.config
+Aug-20 14:41:29.764 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /mnt/phd_repositories/summit-assembly/nextflow.config
+Aug-20 14:41:29.790 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Aug-20 14:41:30.001 [main] DEBUG nextflow.Session - Session uuid: a4e28e88-7a03-4688-93fe-806a63e908e9
+Aug-20 14:41:30.001 [main] DEBUG nextflow.Session - Run name: hopeful_rubens
+Aug-20 14:41:30.003 [main] DEBUG nextflow.Session - Executor pool size: 8
+Aug-20 14:41:30.011 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 0.28.2 build 4782
+  Modified: 06-04-2018 12:25 UTC (06:25 MDT)
+  System: Linux 4.13.0-46-generic
+  Runtime: Groovy 2.4.13 on Java HotSpot(TM) 64-Bit Server VM 1.8.0_181-b13
+  Encoding: UTF-8 (UTF-8)
+  Process: 5365@myst [10.84.97.203]
+  CPUs: 8 - Mem: 15.6 GB (7.3 GB) - Swap: 4 GB (4 GB)
+Aug-20 14:41:30.028 [main] DEBUG nextflow.Session - Work-dir: /mnt/phd_repositories/summit-assembly/work [ext2/ext3]
+Aug-20 14:41:30.028 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /mnt/phd_repositories/summit-assembly/bin
+Aug-20 14:41:30.177 [main] DEBUG nextflow.Session - Session start invoked
+Aug-20 14:41:30.184 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Aug-20 14:41:30.185 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Aug-20 14:41:30.235 [main] DEBUG nextflow.Session - Session aborted -- Cause: startup failed:
+_nf_script_ad509bb6: 77: illegal string body character after dollar sign;
+   solution: either escape a literal dollar sign "\$5" or bracket the value expression "${5}" @ line 77, column 11.
+   	max_len=$( grep -v "^>" temp/interleavened.fasta | wc -L )
+             ^
+
+1 error
+
+Aug-20 14:41:30.291 [main] ERROR nextflow.cli.Launcher - startup failed:
+_nf_script_ad509bb6: 77: illegal string body character after dollar sign;
+   solution: either escape a literal dollar sign "\$5" or bracket the value expression "${5}" @ line 77, column 11.
+   	max_len=$( grep -v "^>" temp/interleavened.fasta | wc -L )
+             ^
+
+1 error
+

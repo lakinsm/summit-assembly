@@ -1,0 +1,89 @@
+Aug-20 14:45:44.914 [main] DEBUG nextflow.cli.Launcher - $> /home/lakinsm/bin/nextflow run summit-assembly.nf -c nextflow.config
+Aug-20 14:45:45.000 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.28.2
+Aug-20 14:45:45.009 [main] INFO  nextflow.cli.CmdRun - Launching `summit-assembly.nf` [maniac_lamarr] - revision: d3154f1994
+Aug-20 14:45:45.020 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: nextflow.config
+Aug-20 14:45:45.022 [main] DEBUG nextflow.config.ConfigBuilder - User config file: nextflow.config
+Aug-20 14:45:45.023 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /mnt/phd_repositories/summit-assembly/nextflow.config
+Aug-20 14:45:45.023 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /mnt/phd_repositories/summit-assembly/nextflow.config
+Aug-20 14:45:45.062 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Aug-20 14:45:45.305 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Aug-20 14:45:45.333 [main] DEBUG nextflow.Session - Session uuid: 04e7f13c-c7b9-4dac-b56d-2e194ccce615
+Aug-20 14:45:45.333 [main] DEBUG nextflow.Session - Run name: maniac_lamarr
+Aug-20 14:45:45.335 [main] DEBUG nextflow.Session - Executor pool size: 8
+Aug-20 14:45:45.344 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 0.28.2 build 4782
+  Modified: 06-04-2018 12:25 UTC (06:25 MDT)
+  System: Linux 4.13.0-46-generic
+  Runtime: Groovy 2.4.13 on Java HotSpot(TM) 64-Bit Server VM 1.8.0_181-b13
+  Encoding: UTF-8 (UTF-8)
+  Process: 6053@myst [10.84.97.203]
+  CPUs: 8 - Mem: 15.6 GB (7.2 GB) - Swap: 4 GB (4 GB)
+Aug-20 14:45:45.361 [main] DEBUG nextflow.Session - Work-dir: /mnt/phd_repositories/summit-assembly/work [ext2/ext3]
+Aug-20 14:45:45.362 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /mnt/phd_repositories/summit-assembly/bin
+Aug-20 14:45:45.465 [main] DEBUG nextflow.Session - Session start invoked
+Aug-20 14:45:45.470 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Aug-20 14:45:45.471 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Aug-20 14:45:45.647 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Aug-20 14:45:45.658 [main] DEBUG nextflow.Channel - files for syntax: glob; folder: containers/data/raw/; pattern: *_R{1,2}_001.fastq.gz; options: [:]
+Aug-20 14:45:45.897 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Aug-20 14:45:45.898 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Aug-20 14:45:45.903 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Aug-20 14:45:45.905 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Aug-20 14:45:45.909 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=15.6 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Aug-20 14:45:45.913 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: LocalPollingMonitor
+Aug-20 14:45:45.913 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Aug-20 14:45:45.915 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Aug-20 14:45:45.943 [main] DEBUG nextflow.Session - >>> barrier register (process: QualityControl)
+Aug-20 14:45:45.945 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > QualityControl -- maxForks: 1
+Aug-20 14:45:45.966 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Aug-20 14:45:45.967 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Aug-20 14:45:45.967 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Aug-20 14:45:45.968 [main] DEBUG nextflow.Session - >>> barrier register (process: AssembleReads)
+Aug-20 14:45:45.968 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > AssembleReads -- maxForks: 1
+Aug-20 14:45:45.970 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Aug-20 14:45:45.970 [main] DEBUG nextflow.Session - Session await
+Aug-20 14:45:46.000 [Actor Thread 1] ERROR nextflow.processor.TaskProcessor - Error executing process > 'QualityControl (SH-IC-13B-Nal_reduced)'
+
+Caused by:
+  Unknown variable 'adapters' -- Make sure you didn't misspell it or define somewhere in the script before use it
+
+Source block:
+  """
+  /usr/lib/jvm/java-7-openjdk-amd64/bin/java -jar ${TRIMMOMATIC}/trimmomatic-0.36.jar \
+      PE \
+      -threads ${threads} \
+      $forward $reverse -baseout ${dataset_id} \
+      ILLUMINACLIP:${adapters}:2:30:10:3:TRUE \
+      LEADING:${leading} \
+      TRAILING:${trailing} \
+      SLIDINGWINDOW:${slidingwindow} \
+      MINLEN:${minlen} \
+      2> ${dataset_id}.trimmomatic.stats.log
+  
+  gzip -c ${dataset_id}_1P > ${dataset_id}.1P.fastq.gz
+  gzip -c ${dataset_id}_2P > ${dataset_id}.2P.fastq.gz
+  rm ${dataset_id}_1P
+  rm ${dataset_id}_2P
+  rm ${dataset_id}_1U
+  rm ${dataset_id}_2U
+  """
+
+Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
+Aug-20 14:45:46.002 [Actor Thread 1] DEBUG nextflow.Session - Session aborted -- Cause: Process `null` script contains error(s)
+Aug-20 14:45:46.015 [Actor Thread 1] DEBUG nextflow.Session - The following nodes are still active:
+[process] QualityControl
+  status=ACTIVE
+  port 0: (queue) OPEN; channel: -
+  port 1: (cntrl) OPEN; channel: $
+
+[process] AssembleReads
+  status=ACTIVE
+  port 0: (queue) OPEN; channel: -
+  port 1: (cntrl) OPEN; channel: $
+
+Aug-20 14:45:46.016 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+Aug-20 14:45:46.018 [main] DEBUG nextflow.Session - Session await > all process finished
+Aug-20 14:45:46.018 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Aug-20 14:45:46.026 [main] DEBUG nextflow.trace.StatsObserver - Workflow completed > WorkflowStats[succeedCount=0; failedCount=0; ignoredCount=0; cachedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms]
+Aug-20 14:45:46.034 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Aug-20 14:45:46.041 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

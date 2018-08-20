@@ -7,10 +7,14 @@ leading = params.leading
 trailing = params.trailing
 slidingwindow = params.slidingwindow
 minlen = params.minlen
+adapters = params.adapters
+
+if( params.help ) {
+    return help()
+}
 
 Channel
     .fromFilePairs( params.reads, flat: true )
-    .ifEmpty { return fastq_error(params.reads) }
     .into { read_pairs; fastqc_pairs }
 
 process QualityControl {
@@ -19,7 +23,6 @@ process QualityControl {
     publishDir "${params.output}/QualityControlOutput", mode: "symlink",
         saveAs: { filename ->
             if(filename.indexOf("P.fastq") > 0) "Paired/$filename"
-            else if(filename.indexOf("U.fastq") > 0) "Unpaired/$filename"
             else if(filename.indexOf(".log") > 0) "Log/$filename"
             else {}
         }
@@ -28,8 +31,7 @@ process QualityControl {
         set dataset_id, file(forward), file(reverse) from read_pairs
     
     output:
-        set dataset_id, file("${dataset_id}.1P.fastq"), file("${dataset_id}.2P.fastq") into (paired_fastq)
-        set dataset_id, file("${dataset_id}.1U.fastq"), file("${dataset_id}.2U.fastq") into (unpaired_fastq)
+        set dataset_id, file("${dataset_id}.1P.fastq.gz"), file("${dataset_id}.2P.fastq.gz") into (paired_fastq)
         set dataset_id, file("${dataset_id}.trimmomatic.stats.log") into (trimmomatic_logs)
     
     """
@@ -44,10 +46,12 @@ process QualityControl {
         MINLEN:${minlen} \
         2> ${dataset_id}.trimmomatic.stats.log
     
-    mv ${dataset_id}_1P ${dataset_id}.1P.fastq
-    mv ${dataset_id}_2P ${dataset_id}.2P.fastq
-    mv ${dataset_id}_1U ${dataset_id}.1U.fastq
-    mv ${dataset_id}_2U ${dataset_id}.2U.fastq
+    gzip -c ${dataset_id}_1P > ${dataset_id}.1P.fastq.gz
+    gzip -c ${dataset_id}_2P > ${dataset_id}.2P.fastq.gz
+    rm ${dataset_id}_1P
+    rm ${dataset_id}_2P
+    rm ${dataset_id}_1U
+    rm ${dataset_id}_2U
     """
 }
 
@@ -60,13 +64,16 @@ process AssembleReads {
         set dataset_id, file(forward), file(reverse) from paired_fastq
     
     output:
-        set dataset_id, file("${dataset_id}.contigs.fa") into (spades_contigs_ariba, spades_contigs_phaster)
-        set dataset_id, file("${dataset_id}.gfa") into (spades_graphs)
-        set dataset_id, file("${dataset_id}.unicycler.log") into (spades_paths)
+        set dataset_id, file("${dataset_id}.contigs.fa") into (idba_assemblies)
     
     script:
     """
-    
+    mkdir -p temp/idba
+	fq2fa --merge --filter <( zcat $forward) <( zcat $reverse ) temp/interleavened.fasta
+    idba_ud --num_threads 60 -l temp/interleavened.fasta -o temp/idba
+
+	cp temp/idba/contig.fa ${dataset_id}.contigs.fasta
+
     """
 }
 
@@ -74,13 +81,6 @@ def nextflow_version_error() {
     println ""
     println "This workflow requires Nextflow version 0.25 or greater -- You are running version $nextflow.version"
     println "Run ./nextflow self-update to update Nextflow to the latest available version."
-    println ""
-    return 1
-}
-
-def fastq_error(def input) {
-    println ""
-    println "[params.reads] fail to open: '" + input + "' : No such file or directory"
     println ""
     return 1
 }
