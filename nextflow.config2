@@ -6,7 +6,7 @@ manifest {
     description = 'IDBA-UD assembly of shotgun metagenomic data on Summit HPC server'
 
     /* Main pipeline script */
-    mainScript = 'summit-assembly.nf'
+    mainScript = 'test.nf'
 
     /* Default repository branch */
     defaultBranch = 'master'
@@ -39,7 +39,7 @@ params {
     output = ""
 
     /* Number of threads */
-    threads = 24
+    threads = 12
 
     /* Trimmomatic trimming parameters */
     leading = 3
@@ -52,13 +52,7 @@ params {
 }
 
 process {
-    executor='slurm'
-    queue='short'
-    memory='3GB'
-    cpus=1
-    clusterOptions='--job-name=nxf_test --nodes=1 --qos=normal --partition=shas --ntasks=1 --time=0:05:00'
-    module='jdk/1.8.0:singularity/2.5.2'
-    
+
     $QualityControl {
         maxForks = 1
         container = 'shub://lakinsm/summit-assembly:latest'
@@ -68,5 +62,31 @@ process {
         maxForks = 1
         container = 'shub://lakinsm/summit-assembly:latest'
     }
+
 }
+
+/*
+process {
+    
+    $QualityControl {
+        maxForks=1
+        threads=12
+        container = 'shub://lakinsm/summit-assembly:latest'
+        executor='slurm'
+        memory='20GB'
+        clusterOptions='--job-name=nxf_test --nodes=1 --qos=normal --partition=shas --ntasks=12 --time=0:05:00'
+        module='jdk/1.8.0:singularity/2.5.2'
+    }
+    
+    $AssembleReads {
+        maxForks = 1
+        threads = 12
+        container = 'shub://lakinsm/summit-assembly:latest'
+        executor='slurm'
+        memory='20GB'
+        clusterOptions='--job-name=nxf_test --nodes=1 --qos=normal --partition=shas --ntasks=12 --time=0:10:00'
+        module='jdk/1.8.0:singularity/2.5.2'
+    }
+}
+*/
 
