@@ -37,7 +37,7 @@ process QualityControl {
     """
     /usr/lib/jvm/java-7-openjdk-amd64/bin/java -jar ${TRIMMOMATIC}/trimmomatic-0.36.jar \
         PE \
-        -threads 12 \
+        -threads 10 \
         -phred33 \
         $forward $reverse \
         ${dataset_id}_1P.fastq ${dataset_id}_1U \
@@ -70,7 +70,7 @@ process AssembleReads {
     """
     mkdir -p temp/idba
 	fq2fa --merge --filter $forward $reverse temp/interleavened.fasta
-    idba_ud --num_threads 24 -r temp/interleavened.fasta -o temp/idba
+    idba_ud --num_threads 20 -r temp/interleavened.fasta -o temp/idba
 
 	cp temp/idba/contig.fa ${dataset_id}.contigs.fasta
 
