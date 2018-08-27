@@ -20,7 +20,7 @@ From: debian:jessie-slim
     cd /opt
     git clone https://github.com/loneknightpy/idba \
     && cd idba \
-    && sed -i 's/kMaxShortSequence = 128/kMaxShortSequence = 180/' src/sequence/short_sequence.h \
+    && sed -i 's/kMaxShortSequence = 128/kMaxShortSequence = 500/' src/sequence/short_sequence.h \
     && ./build.sh \
     && make
     cd /usr/local/bin
