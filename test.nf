@@ -64,7 +64,7 @@ process AssembleReads {
         set dataset_id, file(forward), file(reverse) from paired_fastq
     
     output:
-        set dataset_id, file("${dataset_id}.contigs.fa") into (idba_assemblies)
+        set dataset_id, file("${dataset_id}.contigs.fasta") into (idba_assemblies)
     
     script:
     """
